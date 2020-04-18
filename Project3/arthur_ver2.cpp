@@ -1,4 +1,4 @@
-/*****Version 1.1***********/
+﻿/*****Version 1.1***********/
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -36,6 +36,46 @@ int readFile(const char* filename, int& baseHP1,int& baseHP2,int& wp1,int& wp2,i
 	return 1;
 
 }
+bool soNguyenTo(int hp_in) // roi giai thich ham nay di
+{
+	for (int i = 2; i <= sqrt(hp_in)+1; i++)
+	{
+		if (hp_in % i == 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+struct Knight  
+{   
+	int hp; 
+	int realHp;
+	int wp;
+	bool isMirthil = false;
+	bool isExcalibur = false;
+	bool isPaladin = false;
+};
+
+float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
+{
+
+	Knight hiepSi[2]; // bây giờ anh dùng kiểu này cho dễ hiểu này
+
+	hiepSi[0].hp = baseHP1; 
+	hiepSi[0].wp = wp1; 
+	hiepSi[1].hp = baseHP2; 
+	hiepSi[1].wp = wp2; 
+
+
+
+
+	int Arrayy[2];
+
+
+}
+
+
 
 // TODO: Your code goes here
 
