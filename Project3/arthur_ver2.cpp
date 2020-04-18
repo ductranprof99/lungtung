@@ -52,10 +52,14 @@ struct Knight
 	int hp; 
 	int realHp;
 	int wp;
-	bool isMirthil = false;
-	bool isExcalibur = false;
-	bool isPaladin = false;
+	bool isMirthil = (wp == 2);
+	bool isExcalibur = (wp == 3);
+	bool isPaladin = soNguyenTo(realHp);
 };
+float XacSuatWinBasic(Knight hiepSi1,Knight hiepSi2)
+{
+	return (hiepSi1.realHp - hiepSi2.realHp + 999) / 2000;
+}
 
 float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
 {
@@ -66,11 +70,53 @@ float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
 	hiepSi[0].wp = wp1; 
 	hiepSi[1].hp = baseHP2; 
 	hiepSi[1].wp = wp2; 
+	for (int i = 0; i < 2; i++)
+	{
+		(hiepSi[i].wp == 0) ? hiepSi[i].realHp = floor(hiepSi[i].hp / 10) : hiepSi[i].realHp = hiepSi[i].hp;
+		if (hiepSi[i].hp == ground) hiepSi[i].realHp *= 1.1 ; //cho nay hieu k 
+	}
 
+	// ----------------------
 
+	if (hiepSi[0].hp == 999) return 1.00;   
+	else if (hiepSi[1].hp == 888) return 0.00;   
+	
+	// ----------------------
+	
+	if (hiepSi[0].isPaladin)  
+	{
+		if (hiepSi[1].isPaladin)  
+		{
+			if (hiepSi[0].realHp > hiepSi[1].realHp) return 0.99;
+			else if (hiepSi[0].realHp < hiepSi[1].realHp)  return 0.01;
+			else return 0.50;
+		}
+		else return 1.00;    
+	}
+	else if (hiepSi[1].isPaladin) return 1.00; 
+	
+	// ----------------------
+	
+	if (hiepSi[0].wp == 3)
+	{
+		(hiepSi[0].realHp * 2 > 999) ? hiepSi[0].realHp = 999 : hiepSi[0].realHp *= 2;
+		return floor(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
+	}
 
-
-	int Arrayy[2];
+	// ----------------------
+	if (hiepSi[0].wp == 2 && hiepSi[1].wp == 2) return 0.50;
+	else if (hiepSi[0].wp == 2 && hiepSi[1].wp != 2)
+	{
+		float fOut = floor(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100; 
+		if (hiepSi[0].realHp < hiepSi[1].realHp) return 0.50;
+		else return fOut;
+	}
+	else if (hiepSi[0].wp != 2 && hiepSi[1].wp == 2)
+	{
+		float fOut = floor(XacSuatWinBasic(hiepSi[0], hiepSi[1])*100)/100; 
+		if (hiepSi[0].realHp > hiepSi[1].realHp) return 0.50;
+		else return fOut;
+	}
 
 
 }
