@@ -52,7 +52,7 @@ struct Knight
 	int hp; 
 	int realHp;
 	int wp;
-	bool isMirthil = (wp == 2);
+	bool isMirthil = soNguyenTo(hp);
 	bool isExcalibur = (wp == 3);
 	bool isPaladin =false;
 };
@@ -70,9 +70,6 @@ float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
 	hiepSi[0].wp = wp1; 
 	hiepSi[1].hp = baseHP2; 
 	hiepSi[1].wp = wp2; 
-	hiepSi[0].isPaladin = soNguyenTo(hiepSi[0].hp);
-	hiepSi[1].isPaladin = soNguyenTo(hiepSi[1].hp);
-
 	for (int i = 0; i < 2; i++)
 	{
 		(hiepSi[i].wp == 0) ? hiepSi[i].realHp = round(hiepSi[i].hp / 10) : hiepSi[i].realHp = hiepSi[i].hp;
