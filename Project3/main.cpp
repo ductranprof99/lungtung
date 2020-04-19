@@ -54,11 +54,11 @@ struct Knight
 	int wp;
 	bool isMirthil = (wp == 2);
 	bool isExcalibur = (wp == 3);
-	bool isPaladin = soNguyenTo(realHp);
+	bool isPaladin =false;
 };
 float XacSuatWinBasic(Knight hiepSi1,Knight hiepSi2)
 {
-	return (hiepSi1.realHp - hiepSi2.realHp + 999) / 2000;
+	return (float(hiepSi1.realHp) - float(hiepSi2.realHp) + 999.0f) / 2000.0f;
 }
 
 float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
@@ -70,9 +70,12 @@ float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
 	hiepSi[0].wp = wp1; 
 	hiepSi[1].hp = baseHP2; 
 	hiepSi[1].wp = wp2; 
+	hiepSi[0].isPaladin = soNguyenTo(hiepSi[0].hp);
+	hiepSi[1].isPaladin = soNguyenTo(hiepSi[1].hp);
+
 	for (int i = 0; i < 2; i++)
 	{
-		(hiepSi[i].wp == 0) ? hiepSi[i].realHp = floor(hiepSi[i].hp / 10) : hiepSi[i].realHp = hiepSi[i].hp;
+		(hiepSi[i].wp == 0) ? hiepSi[i].realHp = round(hiepSi[i].hp / 10) : hiepSi[i].realHp = hiepSi[i].hp;
 		if (hiepSi[i].hp == ground) hiepSi[i].realHp *= 1.1 ; //cho nay hieu k 
 	}
 
@@ -100,24 +103,24 @@ float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
 	if (hiepSi[0].wp == 3)
 	{
 		(hiepSi[0].realHp * 2 > 999) ? hiepSi[0].realHp = 999 : hiepSi[0].realHp *= 2;
-		return floor(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
+		return round(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
 	}
 
 	// ----------------------
 	if (hiepSi[0].wp == 2 && hiepSi[1].wp == 2) return 0.50;
 	else if (hiepSi[0].wp == 2 && hiepSi[1].wp != 2)
 	{
-		float fOut = floor(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100; 
+		float fOut = round(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
 		if (hiepSi[0].realHp < hiepSi[1].realHp) return 0.50;
 		else return fOut;
 	}
 	else if (hiepSi[0].wp != 2 && hiepSi[1].wp == 2)
 	{
-		float fOut = floor(XacSuatWinBasic(hiepSi[0], hiepSi[1])*100)/100; 
+		float fOut = round(XacSuatWinBasic(hiepSi[0], hiepSi[1])*100)/100; 
 		if (hiepSi[0].realHp > hiepSi[1].realHp) return 0.50;
 		else return fOut;
 	}
-
+	else return round(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
 
 }
 
@@ -134,17 +137,17 @@ void display(float fOut)
 	}
 	else{
 		char s[10];
-		sprintf(s,"%.2f",fOut);
+		//sprintf(s,"%.2f",fOut);
 		cout << s;
 	}
 }
 
 
-int main(int argc, char** argv)
+int main()
 {
-	if (argc < 2) return 1;
+	
 
-	const char* filename = argv[1];
+	const char* filename = "Test.txt";
 	cout << filename << endl;
 
 	int baseHP1,baseHP2,wp1,wp2,ground;
@@ -153,8 +156,8 @@ int main(int argc, char** argv)
 	
 	// TODO: Your code goes here
 
-
-	display(fOut);
+	cout << DanhNhau(baseHP1, baseHP2, wp1, wp2, ground);
+	//display(fOut);
 
 	return 0;
 }
