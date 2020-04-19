@@ -100,24 +100,24 @@ float DanhNhau(int baseHP1, int baseHP2, int wp1, int wp2, int ground)
 	if (hiepSi[0].wp == 3)
 	{
 		(hiepSi[0].realHp * 2 > 999) ? hiepSi[0].realHp = 999 : hiepSi[0].realHp *= 2;
-		return round(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
+		return XacSuatWinBasic(hiepSi[0], hiepSi[1]);
 	}
 
 	// ----------------------
 	if (hiepSi[0].wp == 2 && hiepSi[1].wp == 2) return 0.50;
 	else if (hiepSi[0].wp == 2 && hiepSi[1].wp != 2)
 	{
-		float fOut = round(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
+		float fOut = XacSuatWinBasic(hiepSi[0], hiepSi[1]) ;
 		if (hiepSi[0].realHp < hiepSi[1].realHp) return 0.50;
 		else return fOut;
 	}
 	else if (hiepSi[0].wp != 2 && hiepSi[1].wp == 2)
 	{
-		float fOut = round(XacSuatWinBasic(hiepSi[0], hiepSi[1])*100)/100; 
+		float fOut = XacSuatWinBasic(hiepSi[0], hiepSi[1]); 
 		if (hiepSi[0].realHp > hiepSi[1].realHp) return 0.50;
 		else return fOut;
 	}
-	else return round(XacSuatWinBasic(hiepSi[0], hiepSi[1]) * 100) / 100;
+	else return XacSuatWinBasic(hiepSi[0], hiepSi[1]);
 
 }
 
@@ -134,7 +134,7 @@ void display(float fOut)
 	}
 	else{
 		char s[10];
-		//sprintf(s,"%.2f",fOut);
+		sprintf_s(s,"%.2f",fOut);
 		cout << s;
 	}
 }
@@ -153,8 +153,8 @@ int main()
 	
 	// TODO: Your code goes here
 
-	cout << DanhNhau(baseHP1, baseHP2, wp1, wp2, ground);
-	//display(fOut);
+	fOut = DanhNhau(baseHP1, baseHP2, wp1, wp2, ground);
+	display(fOut);
 
 	return 0;
 }
